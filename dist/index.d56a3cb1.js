@@ -462,28 +462,26 @@ function hmrAcceptRun(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+const countryList = document.getElementById('countryList');
 async function fetchAllCountries() {
     try {
         const response = await _axiosDefault.default.get('https://restcountries.com/v2/all');
         const countries = response.data;
+        countries.sort((a, b)=>a.population - b.population
+        );
         fetchIt(countries);
     } catch (e) {
         console.error(e);
     }
 }
 function fetchIt(countries) {
-    const countryList = document.getElementById('countryList');
-    countries.map((country)=>{
-        return countryList.innerHTML += `
+    countryList.innerHTML = countries.map((country)=>{
+        return `
             <li>
-            <span>
-                <img src="${country.flag}">
-            </span>
                 <h1 class="${fetchRegionColor(country.region)}">${country.name}</h1>
-                <p>Has a population of ${country.population} people</p>
             </li>
-            `;
-    });
+        `;
+    }).join('');
 }
 function fetchRegionColor(region) {
     switch(region){

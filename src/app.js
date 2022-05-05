@@ -1,29 +1,26 @@
 import axios from 'axios';
 
+const countryList = document.getElementById('countryList');
+
 async function fetchAllCountries() {
     try {
         const response = await axios.get('https://restcountries.com/v2/all');
         const countries = response.data;
+        countries.sort((a, b) => a.population - b.population);
         fetchIt(countries);
-    } catch(e) {
+    } catch (e) {
         console.error(e);
     }
 }
 
 function fetchIt(countries) {
-    const countryList = document.getElementById('countryList');
-    countries.map((country) => {
-        return countryList.innerHTML += `
+    countryList.innerHTML = countries.map((country) => {
+        return `
             <li>
-            <span>
-                <img src="${country.flag}">
-            </span>
                 <h1 class="${fetchRegionColor(country.region)}">${country.name}</h1>
-                <p>Has a population of ${country.population} people</p>
             </li>
-            `
-    });
-
+        `
+    }).join('');
 }
 
 function fetchRegionColor(region) {
@@ -44,5 +41,3 @@ function fetchRegionColor(region) {
 }
 
 fetchAllCountries();
-
-

@@ -1,9 +1,9 @@
-img {
-    width: 100%;
+body {
+    color: black;
 }
 
-span {
-    width: 50px;
+img {
+    width: 700px;
 }
 
 .blue {
@@ -29,4 +29,6 @@ span {
 .default {
     color: black;
 }
+
+
 /*# sourceMappingURL=index.be5cf2f4.css.map */
